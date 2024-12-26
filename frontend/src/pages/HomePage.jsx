@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { axiosInstance } from '../lib/axios'
 import toast from 'react-hot-toast'
-import SideBar from '../components/SideBar'
 import PostCreation from '../components/PostCreation'
 import { Users } from 'lucide-react'
 import Post from '../components/Post'
 import RecommendedUser from '../components/RecommendedUser'
+import SideBar from '../components/SideBar'
 
 const HomePage = () => {
   const {data:authUser} = useQuery({queryKey:['authUser']});
