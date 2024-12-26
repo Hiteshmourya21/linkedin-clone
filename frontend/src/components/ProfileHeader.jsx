@@ -1,25 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { axiosInstance } from "../lib/axios";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+
 import { Camera, Clock, MapPin, UserCheck, UserPlus, X } from "lucide-react";
 
-const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedData, setEditedData] = useState({});
-    const queryClient = useQueryClient();
+const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
+	const [isEditing, setIsEditing] = useState(false);
+	const [editedData, setEditedData] = useState({});
+	const queryClient = useQueryClient();
 
-    const {data:authUser} = useQuery({queryKey:['authUser']});
+	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
-    const {data:connectionStatus, refetch:refetchConnectionStatus} = useQuery({
-        queryKey: ['connectionStatus',userData._id],
-        queryFn: ()=> axiosInstance.get(`/connections/status/${userData._id}`),
-        enabled: !isOwnProfile
-    })
+	const { data: connectionStatus, refetch: refetchConnectionStatus } = useQuery({
+		queryKey: ["connectionStatus", userData._id],
+		queryFn: () => axiosInstance.get(`/connections/status/${userData._id}`),
+		enabled: !isOwnProfile,
+	});
 
-    const isConnected = userData.connections.some((connection) => connection._id === authUser._id);
+	const isConnected = userData.connections.some((connection) => connection === authUser._id);
 
-    const { mutate: sendConnectionRequest } = useMutation({
+	const { mutate: sendConnectionRequest } = useMutation({
 		mutationFn: (userId) => axiosInstance.post(`/connections/request/${userId}`),
 		onSuccess: () => {
 			toast.success("Connection request sent");
@@ -31,7 +32,7 @@ const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
 		},
 	});
 
-    const { mutate: acceptRequest } = useMutation({
+	const { mutate: acceptRequest } = useMutation({
 		mutationFn: (requestId) => axiosInstance.put(`/connections/accept/${requestId}`),
 		onSuccess: () => {
 			toast.success("Connection request accepted");
@@ -55,7 +56,7 @@ const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
 		},
 	});
 
-    const { mutate: removeConnection } = useMutation({
+	const { mutate: removeConnection } = useMutation({
 		mutationFn: (userId) => axiosInstance.delete(`/connections/${userId}`),
 		onSuccess: () => {
 			toast.success("Connection removed");
@@ -66,14 +67,15 @@ const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
 			toast.error(error.response?.data?.message || "An error occurred");
 		},
 	});
-    
-    const getConnectionStatus = useMemo(() => {
+
+	const getConnectionStatus = useMemo(() => {
 		if (isConnected) return "connected";
 		if (!isConnected) return "not_connected";
 		return connectionStatus?.data?.status;
 	}, [isConnected, connectionStatus]);
 
-    const renderConnectionButton = () => {
+
+	const renderConnectionButton = () => {
 		const baseClass = "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
 		switch (getConnectionStatus) {
 			case "connected":
@@ -131,24 +133,24 @@ const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
 		}
 	};
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if(file){
-            const reader = new FileReader();
-            reader.onloadend = () =>{
-                setEditedData((prev)=>({...prev,[e.target.name]:reader.result}));   
-            }
-            reader.readAsDataURL(file);
-        }
-    }
+	const handleImageChange = (event) => {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setEditedData((prev) => ({ ...prev, [event.target.name]: reader.result }));
+			};
+			reader.readAsDataURL(file);
+		}
+	};
 
-    const handleSave = () => {
-        onSave(editedData);
-        setIsEditing(false);
-    }
+	const handleSave = () => {
+		onSave(editedData);
+		setIsEditing(false);
+	};
 
-  return (
-    <div className='bg-white shadow rounded-lg mb-6'>
+	return (
+		<div className='bg-white shadow rounded-lg mb-6'>
 			<div
 				className='relative h-48 rounded-t-lg bg-cover bg-center'
 				style={{
@@ -252,7 +254,6 @@ const ProfileHeader = ({userData,onSave,isOwnProfile}) => {
 				)}
 			</div>
 		</div>
-  )
-}
-
-export default ProfileHeader
+	);
+};
+export default ProfileHeader;
