@@ -6,7 +6,7 @@ import PostCreation from '../components/PostCreation'
 import { Users } from 'lucide-react'
 import Post from '../components/Post'
 import RecommendedUser from '../components/RecommendedUser'
-import SideBar from '../components/SideBar'
+import SideBar from '../components/SideBar.jsx'
 
 const HomePage = () => {
   const {data:authUser} = useQuery({queryKey:['authUser']});

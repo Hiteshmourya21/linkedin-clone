@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 
 import Post from "../components/Post";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/SideBar.jsx";
 
 const PostPage = () => {
 	const { postId } = useParams();
