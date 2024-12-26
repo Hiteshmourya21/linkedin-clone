@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
-import Sidebar from "../components/SideBar";
+import SideBar from "../components/SideBar";
 import { UserPlus } from "lucide-react";
 import FriendRequest from "../components/FriendRequest";
 import UserCard from "../components/UserCard";
@@ -21,7 +21,7 @@ const NetworkPage = () => {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='col-span-1 lg:col-span-1'>
-				<Sidebar user={authUser} />
+				<SideBar user={authUser} />
 			</div>
 			<div className='col-span-1 lg:col-span-3'>
 				<div className='bg-secondary rounded-lg shadow p-6 mb-6'>

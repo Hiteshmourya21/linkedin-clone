@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { ExternalLink, Eye, MessageSquare, ThumbsUp, Trash2, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
-import Sidebar from "../components/SideBar";
+import SideBar from "../components/SideBar";
 
 const NotificationsPage = () => {
   const queryClient = useQueryClient();
@@ -104,7 +104,7 @@ const NotificationsPage = () => {
   return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='col-span-1 lg:col-span-1'>
-				<Sidebar user={authUser} />
+				<SideBar user={authUser} />
 			</div>
 			<div className='col-span-1 lg:col-span-3'>
 				<div className='bg-white rounded-lg shadow p-6'>
