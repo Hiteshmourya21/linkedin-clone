@@ -1,57 +1,51 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { ExternalLink, Eye, MessageSquare, ThumbsUp, Trash2, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 import { formatDistanceToNow } from "date-fns";
-import SideBar from "../components/SideBar";
 
 const NotificationsPage = () => {
-  const queryClient = useQueryClient();
-  const {data: authUser} = useQuery({queryKey: ['authUser']});
+	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
-  const {data: notifications, isLoading} = useQuery({
-    queryKey: ['notifications'],
-    queryFn: async () => axiosInstance.get('/notifications'),
-    enabled: !!authUser,
-  })
+	const queryClient = useQueryClient();
 
-  const {mutate: markAsReadMutation} = useMutation({
-    mutationFn: (id) => axiosInstance.put(`/notifications/${id}/read`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['notifications']);
-    }
-  });
+	const { data: notifications, isLoading } = useQuery({
+		queryKey: ["notifications"],
+		queryFn: () => axiosInstance.get("/notifications"),
+	});
 
-  const {mutate: deleteNotificationMutation} = useMutation({
-    mutationFn: (id) => axiosInstance.delete(`/notifications/${id}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['notifications']);
-      toast.success("Notification deleted successfully");
-    },
-    onError: (error) => {
-      toast.error(error.response.data.message || "Failed to delete notification");
-      }
-  });
-  
+	const { mutate: markAsReadMutation } = useMutation({
+		mutationFn: (id) => axiosInstance.put(`/notifications/${id}/read`),
+		onSuccess: () => {
+			queryClient.invalidateQueries(["notifications"]);
+		},
+	});
 
-  const renderNotificationIcon = (type) =>{
-    switch(type){
-      case "like":
-        return <ThumbsUp className="text-blue-500" />;
+	const { mutate: deleteNotificationMutation } = useMutation({
+		mutationFn: (id) => axiosInstance.delete(`/notifications/${id}`),
+		onSuccess: () => {
+			queryClient.invalidateQueries(["notifications"]);
+			toast.success("Notification deleted");
+		},
+	});
 
-      case "comment":
-        return <MessageSquare className="text-green-500" />;
+	const renderNotificationIcon = (type) => {
+		switch (type) {
+			case "like":
+				return <ThumbsUp className='text-blue-500' />;
 
-      case "connectionAccepted":
-        return <UserPlus className="text-purple-500" />;
-      
-      default:
-        return null;
-    }
-  };
+			case "comment":
+				return <MessageSquare className='text-green-500' />;
+			case "connectionAccepted":
+				return <UserPlus className='text-purple-500' />;
+			default:
+				return null;
+		}
+	};
 
-  const renderNotificationContent = (notification) => {
+	const renderNotificationContent = (notification) => {
 		switch (notification.type) {
 			case "like":
 				return (
@@ -80,9 +74,9 @@ const NotificationsPage = () => {
 			default:
 				return null;
 		}
-	}; 
+	};
 
-  const renderRelatedPost = (relatedPost) => {
+	const renderRelatedPost = (relatedPost) => {
 		if (!relatedPost) return null;
 
 		return (
@@ -101,10 +95,10 @@ const NotificationsPage = () => {
 		);
 	};
 
-  return (
+	return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='col-span-1 lg:col-span-1'>
-				<SideBar user={authUser} />
+				<Sidebar user={authUser} />
 			</div>
 			<div className='col-span-1 lg:col-span-3'>
 				<div className='bg-white rounded-lg shadow p-6'>
@@ -177,6 +171,5 @@ const NotificationsPage = () => {
 			</div>
 		</div>
 	);
-}
-
-export default NotificationsPage
+};
+export default NotificationsPage;

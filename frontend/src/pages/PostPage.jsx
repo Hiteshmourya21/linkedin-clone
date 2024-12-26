@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
-
+import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
-import SideBar from "../components/SideBar";
 
 const PostPage = () => {
 	const { postId } = useParams();
@@ -20,7 +19,7 @@ const PostPage = () => {
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='hidden lg:block lg:col-span-1'>
-				<SideBar user={authUser} />
+				<Sidebar user={authUser} />
 			</div>
 
 			<div className='col-span-1 lg:col-span-3'>

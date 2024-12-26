@@ -1,27 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
+import Sidebar from "../components/Sidebar";
 import { UserPlus } from "lucide-react";
 import FriendRequest from "../components/FriendRequest";
 import UserCard from "../components/UserCard";
-import SideBar from "../components/SideBar";
-
 
 const NetworkPage = () => {
-    const {data:authUser} = useQuery({queryKey:['authUser']});
+	const { data: user } = useQuery({ queryKey: ["authUser"] });
 
-    const {data: connectionRequests} = useQuery({
-        queryKey: ['connectionRequests'],
-        queryFn : () => axiosInstance.get('/connections/requests'),
-    })
+	const { data: connectionRequests } = useQuery({
+		queryKey: ["connectionRequests"],
+		queryFn: () => axiosInstance.get("/connections/requests"),
+	});
 
-    const {data: connections } = useQuery({
-        queryKey: ['connections'],
-        queryFn : () => axiosInstance.get('/connections'),
-    })
-  return (
-    <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+	const { data: connections } = useQuery({
+		queryKey: ["connections"],
+		queryFn: () => axiosInstance.get("/connections"),
+	});
+
+	return (
+		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='col-span-1 lg:col-span-1'>
-				<SideBar user={authUser} />
+				<Sidebar user={user} />
 			</div>
 			<div className='col-span-1 lg:col-span-3'>
 				<div className='bg-secondary rounded-lg shadow p-6 mb-6'>
@@ -61,7 +61,6 @@ const NetworkPage = () => {
 				</div>
 			</div>
 		</div>
-  )
-}
-
-export default NetworkPage
+	);
+};
+export default NetworkPage;
