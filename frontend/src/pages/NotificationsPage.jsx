@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { ExternalLink, Eye, MessageSquare, ThumbsUp, Trash2, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
-import SideBar from "../components/SideBar.jsx";
+import SideBar from "../components/SideBar";
 
 const NotificationsPage = () => {
   const queryClient = useQueryClient();

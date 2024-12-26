@@ -6,7 +6,7 @@ import PostCreation from '../components/PostCreation'
 import { Users } from 'lucide-react'
 import Post from '../components/Post'
 import RecommendedUser from '../components/RecommendedUser'
-import SideBar from '../components/SideBar.jsx'
+import SideBar from "../components/SideBar"
 
 const HomePage = () => {
   const {data:authUser} = useQuery({queryKey:['authUser']});
@@ -33,7 +33,7 @@ const HomePage = () => {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
       <div className='hidden lg:block lg:col-span-1'>
-        <SideBar user={authUser}/>
+        <SideBar user={authUser} />
       </div>
       <div className='col-span-1 lg:col-span-2 order-first lg:order-none'>
         <PostCreation user={authUser}/>

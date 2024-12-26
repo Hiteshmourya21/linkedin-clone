@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import { UserPlus } from "lucide-react";
 import FriendRequest from "../components/FriendRequest";
 import UserCard from "../components/UserCard";
-import SideBar from "../components/SideBar.jsx";
+import SideBar from "../components/SideBar";
 
 
 const NetworkPage = () => {
