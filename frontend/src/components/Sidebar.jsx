@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Home, UserPlus, Bell } from "lucide-react";
 
-export default function SideBar({ user }) {
-	return (
+const SideBar = () => {
+    return (
 		<div className='bg-secondary rounded-lg shadow'>
 			<div className='p-4 text-center'>
 				<div
@@ -60,3 +60,5 @@ export default function SideBar({ user }) {
 		</div>
 	);
 }
+
+export default SideBar
